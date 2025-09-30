@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useAppDispatch } from '../redux/store';
 import { resetActivityCreation } from '../redux/activityCreationSlice';
 import LanguageCurrencyModal from './LanguageCurrencyModal';
+import { appConfig } from '../config/appConfig';
 
 interface NavbarExtranetProps {
   children: React.ReactNode;
@@ -202,27 +203,11 @@ const NavbarExtranet: React.FC<NavbarExtranetProps> = ({ children }) => {
           <div className="d-flex justify-content-between align-items-center py-2 py-md-3">
             {/* Logo - Mobile Responsive */}
             <div className="d-flex align-items-center">
-              <div className="me-2 me-md-4">
-                {company?.logoUrl ? (
+              <div className="me-0 me-md-1">
+                {appConfig.business.urlLogo && (
                   <img 
-                    src={company.logoUrl} 
-                    alt={company.name || 'Logo de la empresa'}
-                    style={{ 
-                      width: '60px', 
-                      height: '60px',
-                      objectFit: 'contain',
-                      borderRadius: '8px'
-                    }}
-                    className="d-md-none"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = '/logo-default.png';
-                    }}
-                  />
-                ) : (
-                  <img 
-                    src="/logo-default.svg" 
-                    alt="Logo por defecto"
+                    src={appConfig.business.urlLogo} 
+                    alt={appConfig.business.name}
                     style={{ 
                       width: '60px', 
                       height: '60px',
@@ -234,29 +219,13 @@ const NavbarExtranet: React.FC<NavbarExtranetProps> = ({ children }) => {
                 )}
                 
                 {/* Desktop Logo */}
-                {company?.logoUrl ? (
+                {appConfig.business.urlLogo && (
                   <img 
-                    src={company.logoUrl} 
-                    alt={company.name || 'Logo de la empresa'}
+                    src={appConfig.business.urlLogo} 
+                    alt={appConfig.business.name}
                     style={{ 
-                      width: '80px', 
-                      height: '80px', 
-                      objectFit: 'contain',
-                      borderRadius: '8px'
-                    }}
-                    className="d-none d-md-block"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = '/logo-default.png';
-                    }}
-                  />
-                ) : (
-                  <img 
-                    src="/logo-default.svg" 
-                    alt="Logo por defecto"
-                    style={{ 
-                      width: '80px', 
-                      height: '80px', 
+                      width: '50px', 
+                      height: '50px', 
                       objectFit: 'contain',
                       borderRadius: '8px'
                     }}
@@ -265,12 +234,9 @@ const NavbarExtranet: React.FC<NavbarExtranetProps> = ({ children }) => {
                 )}
               </div>
               <div className="d-none d-md-block">
-                <h6 className="mb-0 fw-bold text-primary text-uppercase">
-                  {company?.name || ''}
-                </h6>
-                <small className="text-muted">
-                  {company?.ruc ? `RUC: ${company.ruc}` : ''}
-                </small>
+                <h3 className="mb-0 fw-bold text-primary text-uppercase">
+                  {appConfig.business.name}
+                </h3>
               </div>
             </div>
 

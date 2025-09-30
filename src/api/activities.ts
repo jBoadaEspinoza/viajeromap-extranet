@@ -341,8 +341,7 @@ export const activitiesApi = {
   search: async (params: SearchParams): Promise<SearchResponse> => {
     try {
       const searchParams = {
-        ...params,
-        companyId: getRuc()
+        ...params
       };
       
       const response = await apiGet<SearchResponse>('/activities/search', { params: searchParams });

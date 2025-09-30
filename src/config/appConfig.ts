@@ -1,11 +1,11 @@
 export interface AppConfig {
   business: {
-    ruc: string;
     name: string;
     website: string;
     phone: string;
     address: string;
     email: string;
+    urlLogo: string;
   };
   colors: {
     primary: string;
@@ -23,15 +23,15 @@ export interface AppConfig {
 
 export const appConfig: AppConfig = {
   business: {
-    ruc: "10430391564",
-    name: "Peru Trips And Adventures",
-    website: "perutripsadventures.com",
+    name: "viajeromap",
+    website: "www.viajeromap.com",
     phone: "+51919026082",
     address: "Av Paracas Mz Lot 05 Paracas, Ica, Perú",
-    email: "info@perutripsadventures.com"
+    email: "informes@viajeromap.com",
+    urlLogo: "https://firebasestorage.googleapis.com/v0/b/gestionafacil-92adb.firebasestorage.app/o/companies%2Fffb93748-8cac-4b18-affc-2923a1806eda.png?alt=media&token=78f4283b-e92c-4a8f-ac3f-9e948a299399"
   },
   colors: {
-    primary: "#FF4500",
+    primary: "#DC143C",
     secondary: "#2C3E50",
     accent: "#FFC107"
   },

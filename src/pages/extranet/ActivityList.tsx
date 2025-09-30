@@ -5,6 +5,7 @@ import type { Activity } from '../../api/activities';
 import ExtranetPage from '../../components/ExtranetPage';
 import { useLanguage } from '../../context/LanguageContext';
 import { useCurrency } from '../../context/CurrencyContext';
+import { useAuth } from '../../context/AuthContext';
 import { getTranslation } from '../../utils/translations';
 import { useExtranetLoading } from '../../hooks/useExtranetLoading';
 import { useAppDispatch } from '../../redux/store';
@@ -15,6 +16,7 @@ const ExtranetActivities: React.FC = () => {
   const dispatch = useAppDispatch();
   const { language } = useLanguage();
   const { currency } = useCurrency();
+  const { company } = useAuth();
   const { withLoading } = useExtranetLoading();
   const [selectedStatus, setSelectedStatus] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -45,7 +47,8 @@ const ExtranetActivities: React.FC = () => {
           page: currentPage - 1, // API uses 0-based indexing
           size: itemsPerPage,
           lang: language,
-          currency: currency
+          currency: currency,
+          companyId: company?.ruc?.toString()
         });
 
         if (response.success) {

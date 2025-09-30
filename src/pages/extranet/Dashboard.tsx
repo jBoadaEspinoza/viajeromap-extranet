@@ -42,7 +42,8 @@ const Dashboard: React.FC = () => {
             page: 0,
             size: 100, // Obtener más actividades para estadísticas
             lang: language,
-            currency: currency
+            currency: currency,
+            companyId: company?.ruc?.toString()
           });
 
           if (activitiesResponse.success) {

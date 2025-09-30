@@ -1,47 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { useConfig } from '../context/ConfigContext';
 import { getTranslation } from '../utils/translations';
-import { companiesApi } from '../api/companies';
-import type { CompanyData } from '../api/companies';
 import { useAuth } from '../context/AuthContext';
+import { appConfig } from '../config/appConfig';
 
 const Extranet: React.FC = () => {
   const navigate = useNavigate();
   const { language, setLanguage } = useLanguage();
-  const { config } = useConfig();
   const { isAuthenticated, isInitialized, login, loading, error: authError } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [ruc, setRuc] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [companyData, setCompanyData] = useState<CompanyData | null>(null);
-  const [isLoadingCompany, setIsLoadingCompany] = useState(true);
 
-  useEffect(() => {
-    const fetchCompanyData = async () => {
-      try {
-        setIsLoadingCompany(true);
-        const response = await companiesApi.getCompany('10430391564');
-        if (response.success) {
-          setCompanyData(response.data);
-        }
-      } catch (error) {
-        console.error('Error fetching company data:', error);
-      } finally {
-        setIsLoadingCompany(false);
-      }
-    };
-
-    fetchCompanyData();
-  }, []);
 
   // Si ya está autenticado, redirigir al dashboard
   useEffect(() => {
     if (isAuthenticated && isInitialized) {
-      console.log('🔄 LoginExtranet: User already authenticated, redirecting to dashboard');
       navigate('/extranet/dashboard');
     }
   }, [isAuthenticated, isInitialized, navigate]);
@@ -49,8 +27,15 @@ const Extranet: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!username || !password) {
+    if (!ruc || !username || !password) {
       setError(getTranslation('login.error.emptyFields', language));
+      return;
+    }
+
+    // Validar RUC: 11 dígitos que inicien con 10 o 20
+    const rucRegex = /^(10|20)\d{9}$/;
+    if (!rucRegex.test(ruc)) {
+      setError('El RUC debe tener 11 dígitos y comenzar con 10 o 20');
       return;
     }
 
@@ -62,7 +47,7 @@ const Extranet: React.FC = () => {
       const success = await login({
         username: username,
         password: password,
-        ruc: '10430391564',
+        ruc: ruc,
         lang: language
       });
 
@@ -87,36 +72,55 @@ const Extranet: React.FC = () => {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-4">
-                         {/* Card de Login */}
+            {/* Card de Login */}
              <div className="card shadow-lg border-0 rounded-4">
                <div className="card-body p-4">
-                                 {/* Logo y Header */}
-                                  <div className="text-center mb-3">
+                  {/* Logo y Header */}
+                  <div className="text-center mb-3">
                    <div className="mb-2">
-                    {isLoadingCompany ? (
-                      <div className="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" 
-                           style={{ width: '80px', height: '80px' }}>
-                        <div className="spinner-border spinner-border-sm text-white" role="status">
-                          <span className="visually-hidden">Cargando...</span>
-                        </div>
-                      </div>
-                                         ) : companyData?.logoUrl ? (
-                       <img 
-                         src={companyData.logoUrl} 
-                         alt={companyData.name}
-                         style={{ width: '80px', height: '80px', objectFit: 'contain',
-                          borderRadius: '8px' }}
-                       />
+                    {appConfig.business.urlLogo ? (
+                      <img 
+                        src={appConfig.business.urlLogo} 
+                        alt={appConfig.business.name}
+                        style={{ width: '80px', height: '80px', objectFit: 'contain',
+                         borderRadius: '8px' }}
+                      />
                     ) : null}
                   </div>
-                  
-                                     <p className="text-muted mb-0 fw-bold text-uppercase">
-                     {getTranslation('login.title', language)}
+                    <p className="text-muted mb-0 fw-bold text-uppercase">
+                     {appConfig.business.name}
                    </p>
+                    
                 </div>
 
                 {/* Formulario de Login */}
                 <form onSubmit={handleSubmit}>
+                   {/* Campo RUC */}
+                   <div className="mb-2">
+                     <label className="form-label fw-medium text-dark small">
+                       RUC
+                     </label>
+                     <div className="position-relative">
+                       <svg className="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" 
+                            width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                         <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a2 2 0 114 0 2 2 0 01-4 0zm8 0a2 2 0 114 0 2 2 0 01-4 0z" clipRule="evenodd" />
+                       </svg>
+                       <input
+                         type="text"
+                         className="form-control ps-5 py-2 small fs-6"
+                         placeholder="Ingrese su RUC (11 dígitos)"
+                         value={ruc}
+                         onChange={(e) => {
+                           // Solo permitir números y máximo 11 dígitos
+                           const value = e.target.value.replace(/\D/g, '').slice(0, 11);
+                           setRuc(value);
+                         }}
+                         disabled={isLoading}
+                         maxLength={11}
+                       />
+                     </div>
+                   </div>
+
                    {/* Campo Usuario */}
                    <div className="mb-2">
                                          <label className="form-label fw-medium text-dark small">

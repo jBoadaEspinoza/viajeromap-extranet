@@ -3,12 +3,12 @@
 
 /* Custom Bootstrap variables */
 :root {
-  --bs-primary: #F54927;
+  --bs-primary: #DC143C;
   --bs-primary-rgb: 245, 73, 39;
-  --bs-primary-text-emphasis: #F54927;
+  --bs-primary-text-emphasis: #DC143C;
   --bs-primary-bg-subtle: rgba(245, 73, 39, 0.1);
   --bs-primary-border-subtle: rgba(245, 73, 39, 0.2);
-  --app-primary: #F54927;
+  --app-primary: #DC143C;
   --app-secondary: #2C3E50;
   --app-accent: #FFC107;
 }
