@@ -1,0 +1,9 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="80" height="80" rx="8" fill="#F8F9FA"/>
+  <rect x="4" y="4" width="72" height="72" rx="6" fill="#FFFFFF" stroke="#DEE2E6" stroke-width="2"/>
+  <path d="M20 25H60V35H20V25Z" fill="#6C757D"/>
+  <path d="M20 40H60V50H20V40Z" fill="#6C757D"/>
+  <path d="M20 55H45V65H20V55Z" fill="#6C757D"/>
+  <circle cx="55" cy="60" r="8" fill="#F54927"/>
+  <text x="55" y="64" text-anchor="middle" fill="white" font-family="Arial" font-size="12" font-weight="bold">P</text>
+</svg> 

@@ -1,0 +1,19 @@
+{
+  "business": {
+    "ruc": "10430391564",
+    "name": "Peru Trips And Adventures",
+    "website": "perutripsadventures.com",
+    "phone": "+51 1 234 5678",
+    "address": "Lima, Perú",
+    "email": "info@perutripsadventures.com"
+  },
+  "colors": {
+    "primary": "#F54927",
+    "secondary": "#2C3E50",
+    "accent": "#FFC107"
+  },
+  "api": {
+    "baseUrl": "https://tg4jd2gc-8080.brs.devtunnels.ms",
+    "timeout": 10000
+  }
+} 
