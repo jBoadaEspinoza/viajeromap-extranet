@@ -156,11 +156,6 @@ const hexToRgb = (hex: string): string => {
     '245, 73, 39';
 };
 
-// Get the RUC from config
-export const getRuc = () => {
-  return appConfig.business.ruc;
-};
-
 // Get business info
 export const getBusinessInfo = () => {
   return appConfig.business;

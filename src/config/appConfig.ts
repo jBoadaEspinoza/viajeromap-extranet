@@ -40,7 +40,7 @@ export const appConfig: AppConfig = {
     timeout: 10000
   },
   pricing: {
-    defaultCommissionPercentage: 0
+    defaultCommissionPercentage: 20
   }
 };
 

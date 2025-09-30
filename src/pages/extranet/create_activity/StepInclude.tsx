@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import { getTranslation } from '@/utils/translations';
+import { useAuth } from '@/context/AuthContext';
 import ActivityCreationLayout from '@/components/ActivityCreationLayout';
 import { useExtranetLoading } from '@/hooks/useExtranetLoading';
 import { useAppSelector, useAppDispatch } from '@/redux/store';
@@ -12,6 +13,7 @@ import { navigateToActivityStep } from '@/utils/navigationUtils';
 const StepInclude: React.FC = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
+  const { company } = useAuth();
   const { withLoading } = useExtranetLoading();
   const dispatch = useAppDispatch();
   const hasRedirected = useRef(false);
@@ -27,7 +29,7 @@ const StepInclude: React.FC = () => {
     const loadActivityData = async () => {
       if (!activityId) return;
       await withLoading(async () => {
-        const activityData = await activitiesApi.getById(activityId, lang, currency.toUpperCase());
+        const activityData = await activitiesApi.getById(activityId, lang, currency.toUpperCase(),company?.ruc?.toString());
         setActivityData(activityData);
 
         // Cargar inclusions si existen

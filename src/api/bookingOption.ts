@@ -1,6 +1,5 @@
 import { apiGet } from './apiConfig';
 import { apiPost } from './apiConfig';
-import { getRuc } from '../utils/configUtils';
 
 
 export interface ScheduleException {

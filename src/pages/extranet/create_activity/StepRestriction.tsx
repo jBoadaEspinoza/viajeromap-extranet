@@ -6,6 +6,7 @@ import ActivityCreationLayout from '@/components/ActivityCreationLayout';
 import { useExtranetLoading } from '@/hooks/useExtranetLoading';
 import { useAppSelector, useAppDispatch } from '@/redux/store';
 import { activitiesApi } from '@/api/activities';
+import { useAuth } from '@/context/AuthContext';
 import { useActivityParams } from '@/hooks/useActivityParams';
 import { navigateToActivityStep } from '@/utils/navigationUtils';
 
@@ -14,6 +15,7 @@ const StepRestriction: React.FC = () => {
   const { language } = useLanguage();
   const { withLoading } = useExtranetLoading();
   const dispatch = useAppDispatch();
+  const { company } = useAuth();
   const hasRedirected = useRef(false);
   const [activityData, setActivityData] = useState<any>(null);
   const [restrictions, setRestrictions] = useState<string[]>([]); // Start with no restrictions
@@ -27,7 +29,7 @@ const StepRestriction: React.FC = () => {
     const loadActivityData = async () => {
       if (!activityId) return;
       await withLoading(async () => {
-        const activityData = await activitiesApi.getById(activityId, lang, currency.toUpperCase());
+        const activityData = await activitiesApi.getById(activityId, lang, currency.toUpperCase(),company?.ruc?.toString());
         setActivityData(activityData);
         
         // Cargar recomendaciones si existen

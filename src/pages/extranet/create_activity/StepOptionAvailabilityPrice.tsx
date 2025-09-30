@@ -617,14 +617,14 @@ export default function StepOptionAvailabilityPrice() {
                               {(() => {
                                 if (bookingOptionData.pricingMode === 'PER_PERSON') {
                                    if (bookingOptionData.priceTiers && bookingOptionData.priceTiers.length > 1) {
-                                      const minPrice = Math.min(...bookingOptionData.priceTiers.map((tier: any) => tier.pricePerParticipant));
-                                      const minCurrency = bookingOptionData.priceTiers.find((tier: any) => tier.pricePerParticipant === minPrice)?.currency;
-                                      const maxPrice = Math.max(...bookingOptionData.priceTiers.map((tier: any) => tier.pricePerParticipant));
-                                      const maxCurrency = bookingOptionData.priceTiers.find((tier: any) => tier.pricePerParticipant === maxPrice)?.currency;
+                                      const minPrice = Math.min(...bookingOptionData.priceTiers.map((tier: any) => tier.totalPrice));
+                                      const minCurrency = bookingOptionData.priceTiers.find((tier: any) => tier.totalPrice === minPrice)?.currency;
+                                      const maxPrice = Math.max(...bookingOptionData.priceTiers.map((tier: any) => tier.totalPrice));
+                                      const maxCurrency = bookingOptionData.priceTiers.find((tier: any) => tier.totalPrice === maxPrice)?.currency;
                                       return `${minPrice.toFixed(2)} ${minCurrency.toUpperCase()} - ${maxPrice.toFixed(2)} ${maxCurrency.toUpperCase()}`;
                                    } else if (bookingOptionData.priceTiers && bookingOptionData.priceTiers.length === 1) {
                                      const currency = bookingOptionData.priceTiers[0].currency;
-                                     return `${bookingOptionData.priceTiers[0].pricePerParticipant.toFixed(2)} ${currency.toUpperCase()} `;
+                                     return `${bookingOptionData.priceTiers[0].totalPrice.toFixed(2)} ${currency.toUpperCase()} `;
                                     } else {
                                       return 'No definido';
                                   }

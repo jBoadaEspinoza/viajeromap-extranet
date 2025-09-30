@@ -6,6 +6,7 @@ import ActivityCreationLayout from '@/components/ActivityCreationLayout';
 import { useExtranetLoading } from '@/hooks/useExtranetLoading';
 import { useAppSelector, useAppDispatch } from '@/redux/store';
 import { activitiesApi } from '@/api/activities';
+import { useAuth } from '@/context/AuthContext';
 import { useActivityParams } from '@/hooks/useActivityParams';
 import { navigateToActivityStep } from '@/utils/navigationUtils';
 
@@ -20,6 +21,7 @@ const StepTitle: React.FC<StepTitleProps> = () => {
   const { withLoading } = useExtranetLoading();
   const dispatch = useAppDispatch();
   const [title, setTitle] = useState('');
+  const { company } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [titleError, setTitleError] = useState<string | null>(null);
   const [activityData, setActivityData] = useState<any>(null);
@@ -35,7 +37,7 @@ const StepTitle: React.FC<StepTitleProps> = () => {
       if (!currentActivityId) return;
       await withLoading(async () => {
         try {
-          const activityData = await activitiesApi.getById(currentActivityId, language, currency.toUpperCase());
+          const activityData = await activitiesApi.getById(currentActivityId, language, currency.toUpperCase(),company?.ruc?.toString());
           console.log('activityData', activityData);
           setActivityData(activityData);
           // Siempre cargar el título si existe, incluso si está vacío

@@ -1,6 +1,5 @@
 import { apiGet } from './apiConfig';
 import { apiPost } from './apiConfig';
-import { getRuc } from '../utils/configUtils';
 
 export interface Itinerary {
   id: number;
@@ -361,10 +360,10 @@ export const activitiesApi = {
     }
   },
 
-  getById: async (id: string, lang: string = 'es', currency: string = 'PEN'): Promise<Activity> => {
+  getById: async (id: string, lang: string = 'es', currency: string = 'PEN', companyId: string = ''): Promise<Activity> => {
     try {
       const url = `/activities/search/${id}`;
-      const params = { lang, currency, companyId: getRuc() };
+      const params = { lang, currency, companyId };
       
       const response = await apiGet<any>(url, { params });
       // Handle different response structures
@@ -401,9 +400,9 @@ export const activitiesApi = {
     }
   },
 
-  getDestinations: async (page: number = 0, size: number = 10, sortBy: string = 'cityName', sortDirection: string = 'ASC'): Promise<DestinationsResponse> => {
+  getDestinations: async (page: number = 0, size: number = 10, sortBy: string = 'cityName', sortDirection: string = 'ASC', companyId: string = ''): Promise<DestinationsResponse> => {
     try {
-      const params = { page, size, sortBy, sortDirection, companyId: getRuc() };
+      const params = { page, size, sortBy, sortDirection, companyId };
       
       const response = await apiGet<DestinationsResponse>('/activities/destinations', { params });
       return response;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
+import { useAuth } from '@/context/AuthContext';
 import { getTranslation, getTranslationWithParams } from '@/utils/translations';
 import ActivityCreationLayout from '@/components/ActivityCreationLayout';
 import ItinerarySchedule from '@/components/ItinerarySchedule';
@@ -14,6 +15,7 @@ import { useExtranetLoading } from '@/hooks/useExtranetLoading';
 const StepItinerary: React.FC = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
+  const { company } = useAuth();
   const { withLoading } = useExtranetLoading();
   const dispatch = useAppDispatch();
   const { activityId, lang, currency, currentStep } = useActivityParams();
@@ -42,7 +44,7 @@ const StepItinerary: React.FC = () => {
       const fetchActivity = async () => {
         try {
           setIsLoadingActivity(true);
-          const activityData = await activitiesApi.getById(activityId, language, currency);
+          const activityData = await activitiesApi.getById(activityId, language, currency,company?.ruc?.toString());
           setActivity(activityData);
         } catch (error) {
           console.error('Error fetching activity:', error);

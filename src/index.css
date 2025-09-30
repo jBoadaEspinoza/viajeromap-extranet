@@ -1,13 +1,13 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Custom Bootstrap variables */
+/* Custom Bootstrap variables - These will be overridden by configUtils */
 :root {
   --bs-primary: #DC143C;
-  --bs-primary-rgb: 245, 73, 39;
+  --bs-primary-rgb: 220, 20, 60;
   --bs-primary-text-emphasis: #DC143C;
-  --bs-primary-bg-subtle: rgba(245, 73, 39, 0.1);
-  --bs-primary-border-subtle: rgba(245, 73, 39, 0.2);
+  --bs-primary-bg-subtle: rgba(220, 20, 60, 0.1);
+  --bs-primary-border-subtle: rgba(220, 20, 60, 0.2);
   --app-primary: #DC143C;
   --app-secondary: #2C3E50;
   --app-accent: #FFC107;
